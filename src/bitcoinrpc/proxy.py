@@ -77,7 +77,8 @@ class HTTPTransport(object):
                 'code': -342, 'message': 'missing HTTP response from server'})
         elif httpresp.status == httplib.FORBIDDEN:
             msg = "bitcoind returns 403 Forbidden. Is your IP allowed?"
-            raise TransportException(msg, code = 403, protocol = "HTTP", raw_detail = httpresp)
+            raise TransportException(msg, code=403, protocol="HTTP",
+                                     raw_detail=httpresp)
 
         resp = httpresp.read()
         return resp.decode('utf8')
@@ -119,7 +120,7 @@ class RPCMethod(object):
         resp = self._service_proxy._transport.request(postdata)
         resp = json.loads(resp, parse_float=decimal.Decimal)
 
-        if resp['error'] != None:
+        if resp['error'] is not None:
             raise JSONRPCException(resp['error'])
         elif 'result' not in resp:
             raise JSONRPCException({
