@@ -284,6 +284,16 @@ class BitcoinConnection(object):
         else:
             return TransactionInfo()
 
+    def sendrawtransaction(self, hex_encoded_txn):
+        """
+        Submit a signed transaction to the network. It must be signed appropriately
+        and use inputs that are not spent and pass all other checks before it actually
+        sent on the public network.
+
+        Returns hash of transaction or error if not accepted.
+        """
+        return self.proxy.sendrawtransaction(hex_encoded_txn)
+
     def createrawtransaction(self, inputs, outputs):
         """
         Creates a raw transaction spending given inputs
